@@ -1,0 +1,9 @@
+@import "./components.css";
+@import "./fonts.css";
+@import "./defaults/standard.css";
+@import "./defaults/sticky-footer.css";
+
+:root {
+  --dark-grey: #363534;
+  --muted-gray: #726d6d;
+}
