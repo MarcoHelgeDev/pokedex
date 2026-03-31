@@ -1,4 +1,5 @@
 @import "./components.css";
+@import "./pkmn-types.css";
 @import "./fonts.css";
 @import "./defaults/standard.css";
 @import "./defaults/sticky-footer.css";
@@ -6,4 +7,29 @@
 :root {
   --dark-grey: #363534;
   --muted-gray: #726d6d;
+}
+
+.search-field-wrapper {
+  margin: 5rem 0;
+}
+.section-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pkmn-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.6rem;
+}
+
+.pkmn-card {
+  width: 25rem;
+  background-color: red;
+}
+.pkmn-card img {
+  display: flex;
+  width: 100px;
+  object-fit: cover;
 }

@@ -5,10 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pokédex</title>
     <link rel="stylesheet" href="./styles/style.css" />
-    <script src="./scripts/script.js"></script>
-    <script src="./scripts/template.js"></script>
+    <script src="./scripts/script.js" defer></script>
+    <script src="./scripts/template.js" defer></script>
   </head>
   <body>
-    <div class="js-pkmn-render-container"></div>
+    <main class="container">
+      <div class="search-field-wrapper">
+        <h2>Search for your Pokemon</h2>
+        <input class="js-inputField" type="text" />
+        <button class="js-pkmn-search-btn">Search</button>
+      </div>
+      <section class="section-wrapper">
+        <div class="js-pkmn-render-container pkmn-wrapper"></div>
+      </section>
+    </main>
   </body>
 </html>
