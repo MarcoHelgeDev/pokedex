@@ -3,6 +3,7 @@ const pkmnSearchBtn = document.querySelector(".js-pkmn-search-btn");
 const pkmnResetBtn = document.querySelector(".js-pkmn-reset-btn");
 const pkmnLoadBtn = document.querySelector(".js-pkmn-load-btn");
 const pkmnInput = document.querySelector(".js-inputField");
+// const pkmnDetailContainer = document.querySelector(".js-pkmn-detail-container");
 
 const BASE_URL = "https://pokeapi.co/api/v2/pokemon/";
 let pkmnData = [];
@@ -98,9 +99,11 @@ const searchPokemon = async function () {
   pkmnLoadBtn.disabled = true;
 
   if (foundPokemon.length === 0) {
+    // pkmnDetailContainer.classList.add("hidden");
     pkmnContainer.innerHTML = getNoPokemonFoundTemplate();
   } else {
     let html = "";
+    // pkmnDetailContainer.classList.remove("hidden");
 
     for (let i = 0; i < foundPokemon.length; i++) {
       let pkmnURL = foundPokemon[i].url;
@@ -131,6 +134,7 @@ const resetPkmnList = async function () {
   pkmnContainer.innerHTML = "";
   pkmnInput.value = "";
   pkmnResetBtn.disabled = true;
+  // pkmnDetailContainer.classList.remove("hidden");
 
   updateSearchButtonState();
   await renderPkmn();
@@ -154,6 +158,19 @@ const init = async function () {
   pkmnData = await getPokemon();
   console.log(pkmnData);
   await renderPkmn();
+};
+
+const pkmnTypeBackground = function (pkmn) {
+  const firstType = pkmn.types[0].type.name;
+  let secondType = "";
+  if (pkmn.types[1]) {
+    secondType = pkmn.types[1].type.name;
+  }
+  if (!secondType) {
+    return `var(--type-${firstType}-soft)`;
+  }
+
+  return `linear-gradient(135deg, var(--type-${firstType}-soft), var(--type-${secondType}-soft))`;
 };
 
 init();

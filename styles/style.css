@@ -5,36 +5,95 @@
 @import "./defaults/sticky-footer.css";
 
 :root {
-  --dark-grey: #363534;
-  --muted-gray: #726d6d;
+  --box-shadow: rgba(149, 157, 165, 0.2);
 }
 
-.search-field-wrapper {
-  margin: 5rem 0;
+.hidden {
+  display: none;
 }
-.section-wrapper {
+
+.content-wrapper {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  gap: 2rem;
 }
 
-.pkmn-wrapper {
+.pkmn-list-wrapper {
   display: flex;
   flex-wrap: wrap;
-  gap: 1.6rem;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex: 1;
+  gap: 2rem;
+}
+
+.pkmn-detail-card-wrapper {
+  flex-shrink: 0;
+  width: 32rem;
+  height: 80vh;
+  padding: 2rem;
 }
 
 .pkmn-card {
-  width: 25rem;
-  background-color: red;
-}
-.pkmn-card img {
   display: flex;
-  width: 100px;
-  object-fit: cover;
+  align-items: center;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 20rem;
+  border-radius: 1.5rem;
+  box-shadow: var(--box-shadow) 0 1rem 2.5rem;
+  padding: 2rem;
+  margin-top: 5rem;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
-.load-more-wrapper {
-  margin-top: 2rem;
-  margin-bottom: 2rem;
+.pkmn-card:hover {
+  transform: translateY(-0.4rem);
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.12);
+}
+
+.pkmn-card > img {
+  width: 11rem;
+  transform: translate(0, -8rem);
+  image-rendering: pixelated;
+}
+
+.pkmn-card:hover > img {
+  animation: bounce 0.4s;
+}
+
+@keyframes bounce {
+  0% {
+    transform: translate(0, -8rem);
+  }
+
+  50% {
+    transform: translate(0, -9rem);
+  }
+
+  100% {
+    transform: translate(0, -8rem);
+  }
+}
+
+.pkmn-card-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: -9rem;
+  gap: 2rem;
+}
+
+.pkmn-card-info > h2 {
+  font-size: 2.5rem;
+  line-height: 1rem;
+}
+
+.pkmn-card-info > p {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: grey;
+  line-height: 1rem;
 }

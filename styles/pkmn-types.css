@@ -17,7 +17,27 @@
   --type-dark: #8c7b72;
   --type-steel: #b9c3d0;
   --type-fairy: #efb2d6;
+
+  --type-normal-soft: #eee8dd;
+  --type-fire-soft: #f8e1d2;
+  --type-water-soft: #dcecf8;
+  --type-electric-soft: #f8f1cf;
+  --type-grass-soft: #e2f1d8;
+  --type-ice-soft: #def4f5;
+  --type-fighting-soft: #f0d8d3;
+  --type-poison-soft: #ebddf2;
+  --type-ground-soft: #efe4c9;
+  --type-flying-soft: #dfeafc;
+  --type-psychic-soft: #f8dbe5;
+  --type-bug-soft: #e5efcf;
+  --type-rock-soft: #ece4d3;
+  --type-ghost-soft: #e2dcef;
+  --type-dragon-soft: #ddd8fb;
+  --type-dark-soft: #e2dcda;
+  --type-steel-soft: #e7ebf0;
+  --type-fairy-soft: #f7dfec;
 }
+
 .pkmn-type {
   display: flex;
   gap: 0.8rem;

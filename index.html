@@ -10,15 +10,18 @@
   </head>
   <body>
     <main class="container">
-      <div class="search-field-wrapper">
-        <h2>Search for your Pokemon</h2>
-        <input class="js-inputField" type="text" />
-        <button class="js-pkmn-search-btn">Search</button>
-        <button class="js-pkmn-reset-btn">Reset</button>
-      </div>
-      <section class="section-wrapper">
-        <div class="js-pkmn-render-container pkmn-wrapper"></div>
+      <header class="search-field-wrapper">
+        <h1>Search for your Pokemon</h1>
+        <form class="search-form">
+          <input class="js-inputField" type="text" />
+          <button class="js-pkmn-search-btn" type="button">Search</button>
+          <button class="js-pkmn-reset-btn" type="button">Reset</button>
+        </form>
+      </header>
+      <section class="content-wrapper">
+        <div class="js-pkmn-render-container pkmn-list-wrapper"></div>
       </section>
+
       <div class="load-more-wrapper">
         <button class="js-pkmn-load-btn load-btn">Load</button>
       </div>
@@ -26,5 +29,6 @@
         <img src="./assets/icons/poke-spinner.webp" alt="Pokéball" />
       </div>
     </main>
+    <footer>Inhalt des Footers</footer>
   </body>
 </html>

@@ -1,14 +1,15 @@
 const getPkmnTemplate = function (pkmn) {
   return /*html*/ `
-    <div class="pkmn-card">
+    <div class="pkmn-card" style="background:${pkmnTypeBackground(pkmn)}">
             <img src="${pkmn.sprites.front_default}" alt="${pkmn.name}">
+            <div class="pkmn-card-info">
   <p>N°${pkmn.id}</p>
     <h2>${pkmn.name}</h2>
     <div class="pkmn-type">
       <span class="type-badge ${pkmn.types[0].type.name}">${pkmn.types[0].type.name}</span>
       ${pkmnHasTwoTypes(pkmn)}
     </div>
-      
+</div>
     </div>
   `;
 };
