@@ -1,12 +1,15 @@
 const pkmnContainer = document.querySelector(".js-pkmn-render-container");
 const pkmnSearchBtn = document.querySelector(".js-pkmn-search-btn");
+const pkmnResetBtn = document.querySelector(".js-pkmn-reset-btn");
 const pkmnLoadBtn = document.querySelector(".js-pkmn-load-btn");
+const pkmnInput = document.querySelector(".js-inputField");
 
 const BASE_URL = "https://pokeapi.co/api/v2/pokemon/";
 let pkmnData = [];
 let pkmnCache = {};
 let startIndex = 0;
 let endIndex = 20;
+pkmnResetBtn.disabled = true;
 
 const getPokemon = async function () {
   let limit = "?limit=1025";
@@ -18,6 +21,7 @@ const getPokemon = async function () {
 const renderPkmn = async function () {
   startLoadingScreen();
   pkmnLoadBtn.disabled = true;
+
   let currentEnd = Math.min(pkmnData.length, endIndex);
   let html = "";
 
@@ -28,22 +32,14 @@ const renderPkmn = async function () {
 
   for (startIndex; startIndex < currentEnd; startIndex++) {
     let pkmnURL = pkmnData[startIndex].url;
-    let pokemonData;
-
-    if (pkmnCache[pkmnURL] !== undefined) {
-      pokemonData = pkmnCache[pkmnURL];
-    } else {
-      let response = await fetch(pkmnURL);
-      let result = await response.json();
-      pkmnCache[pkmnURL] = result;
-      pokemonData = result;
-    }
-
+    let pokemonData = await getPokemonDetails(pkmnURL);
     html += getPkmnTemplate(pokemonData);
   }
+
   pkmnContainer.innerHTML += html;
   endIndex += 20;
   endLoadingScreen();
+
   if (startIndex >= pkmnData.length) {
     pkmnLoadBtn.disabled = true;
   } else {
@@ -51,7 +47,7 @@ const renderPkmn = async function () {
   }
 };
 
-const renderRequest = async function (pkmnData) {
+const renderRequest = function (pkmnData) {
   let html = "";
   html += getPkmnTemplate(pkmnData);
   pkmnContainer.innerHTML = html;
@@ -66,17 +62,81 @@ const pkmnHasTwoTypes = function (pkmn) {
   }
 };
 
-pkmnSearchBtn.addEventListener("click", function () {
-  const inputField = document.querySelector(".js-inputField").value;
-  if (inputField.trim().length < 3) {
-    return;
+const updateSearchButtonState = function () {
+  if (pkmnInput.value.trim().length >= 3) {
+    pkmnSearchBtn.disabled = false;
+  } else {
+    pkmnSearchBtn.disabled = true;
+  }
+};
+
+pkmnInput.addEventListener("input", function () {
+  updateSearchButtonState();
+});
+
+const getPokemonDetails = async function (pkmnURL) {
+  if (pkmnCache[pkmnURL] !== undefined) {
+    return pkmnCache[pkmnURL];
+  } else {
+    let response = await fetch(pkmnURL);
+    let result = await response.json();
+    pkmnCache[pkmnURL] = result;
+    return result;
+  }
+};
+
+const searchPokemon = async function () {
+  let pkmnSearchValue = pkmnInput.value.trim().toLowerCase();
+  let foundPokemon = [];
+
+  for (let i = 0; i < pkmnData.length; i++) {
+    if (pkmnData[i].name.includes(pkmnSearchValue)) {
+      foundPokemon.push(pkmnData[i]);
+    }
   }
 
-  if (!inputField) {
-    renderPkmn();
+  pkmnLoadBtn.disabled = true;
+
+  if (foundPokemon.length === 0) {
+    pkmnContainer.innerHTML = getNoPokemonFoundTemplate();
+  } else {
+    let html = "";
+
+    for (let i = 0; i < foundPokemon.length; i++) {
+      let pkmnURL = foundPokemon[i].url;
+      let pokemonData = await getPokemonDetails(pkmnURL);
+      html += getPkmnTemplate(pokemonData);
+    }
+
+    pkmnContainer.innerHTML = html;
   }
-  getPokemon(inputField);
+};
+
+pkmnSearchBtn.addEventListener("click", async function () {
+  startLoadingScreen();
+  pkmnSearchBtn.disabled = true;
+  pkmnResetBtn.disabled = false;
+
+  await searchPokemon();
+
+  endLoadingScreen();
+
+  updateSearchButtonState();
 });
+
+const resetPkmnList = async function () {
+  startIndex = 0;
+  endIndex = 20;
+  pkmnLoadBtn.disabled = false;
+  pkmnContainer.innerHTML = "";
+  pkmnInput.value = "";
+  pkmnResetBtn.disabled = true;
+
+  updateSearchButtonState();
+  await renderPkmn();
+};
+
+pkmnResetBtn.addEventListener("click", resetPkmnList);
 
 pkmnLoadBtn.addEventListener("click", renderPkmn);
 
@@ -92,6 +152,7 @@ const endLoadingScreen = function () {
 
 const init = async function () {
   pkmnData = await getPokemon();
+  console.log(pkmnData);
   await renderPkmn();
 };
 

@@ -18,3 +18,9 @@ const renderPkmnSecondType = function (pkmnSecondType) {
     <span class="type-badge ${pkmnSecondType}">${pkmnSecondType}</span>
   `;
 };
+
+const getNoPokemonFoundTemplate = function () {
+  return /*html*/ `
+    <p>Kein Pokémon gefunden.</p>
+  `;
+};
