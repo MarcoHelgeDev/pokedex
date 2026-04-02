@@ -3,7 +3,8 @@ const pkmnSearchBtn = document.querySelector(".js-pkmn-search-btn");
 const pkmnResetBtn = document.querySelector(".js-pkmn-reset-btn");
 const pkmnLoadBtn = document.querySelector(".js-pkmn-load-btn");
 const pkmnInput = document.querySelector(".js-inputField");
-// const pkmnDetailContainer = document.querySelector(".js-pkmn-detail-container");
+const pkmnDialog = document.querySelector(".js-pkmn-detail-dialog");
+const pkmnDialogContent = document.querySelector(".js-pkmn-detail-content");
 
 const BASE_URL = "https://pokeapi.co/api/v2/pokemon/";
 let pkmnData = [];
@@ -46,12 +47,6 @@ const renderPkmn = async function () {
   } else {
     pkmnLoadBtn.disabled = false;
   }
-};
-
-const renderRequest = function (pkmnData) {
-  let html = "";
-  html += getPkmnTemplate(pkmnData);
-  pkmnContainer.innerHTML = html;
 };
 
 const pkmnHasTwoTypes = function (pkmn) {
@@ -99,11 +94,9 @@ const searchPokemon = async function () {
   pkmnLoadBtn.disabled = true;
 
   if (foundPokemon.length === 0) {
-    // pkmnDetailContainer.classList.add("hidden");
     pkmnContainer.innerHTML = getNoPokemonFoundTemplate();
   } else {
     let html = "";
-    // pkmnDetailContainer.classList.remove("hidden");
 
     for (let i = 0; i < foundPokemon.length; i++) {
       let pkmnURL = foundPokemon[i].url;
@@ -134,7 +127,6 @@ const resetPkmnList = async function () {
   pkmnContainer.innerHTML = "";
   pkmnInput.value = "";
   pkmnResetBtn.disabled = true;
-  // pkmnDetailContainer.classList.remove("hidden");
 
   updateSearchButtonState();
   await renderPkmn();
@@ -159,6 +151,28 @@ const init = async function () {
   console.log(pkmnData);
   await renderPkmn();
 };
+
+pkmnContainer.addEventListener("click", async function (event) {
+  let findPkmnDetails;
+  let findPkmnURL;
+  const clickedCard = event.target.closest(".pkmn-card");
+  if (!clickedCard) {
+    return;
+  }
+  const pokemonId = Number(clickedCard.dataset.id);
+
+  for (let index = 0; index < pkmnData.length; index++) {
+    let pkmnURL = pkmnData[index].url;
+    let urlId = pkmnURL.split("/");
+    if (Number(urlId[6]) === pokemonId) {
+      findPkmnURL = pkmnURL;
+      findPkmnDetails = await getPokemonDetails(findPkmnURL);
+      pkmnDialogContent.innerHTML = getPkmnDetailTemplate(findPkmnDetails);
+      pkmnDialog.showModal();
+      break;
+    }
+  }
+});
 
 const pkmnTypeBackground = function (pkmn) {
   const firstType = pkmn.types[0].type.name;

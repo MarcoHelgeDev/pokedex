@@ -1,34 +1,42 @@
 <!doctype html>
-<html lang="de">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pokédex</title>
     <link rel="stylesheet" href="./styles/style.css" />
-    <script src="./scripts/script.js" defer></script>
     <script src="./scripts/template.js" defer></script>
+    <script src="./scripts/script.js" defer></script>
   </head>
   <body>
     <main class="container">
       <header class="search-field-wrapper">
         <h1>Search for your Pokemon</h1>
+
         <form class="search-form">
           <input class="js-inputField" type="text" />
           <button class="js-pkmn-search-btn" type="button">Search</button>
           <button class="js-pkmn-reset-btn" type="button">Reset</button>
         </form>
       </header>
+
       <section class="content-wrapper">
         <div class="js-pkmn-render-container pkmn-list-wrapper"></div>
       </section>
 
+      <dialog class="js-pkmn-detail-dialog pkmn-detail-dialog">
+        <div class="js-pkmn-detail-content pkmn-detail-content"></div>
+      </dialog>
+
       <div class="load-more-wrapper">
         <button class="js-pkmn-load-btn load-btn">Load</button>
       </div>
+
       <div class="js-spinner-container spinnerContainer hidden">
         <img src="./assets/icons/poke-spinner.webp" alt="Pokéball" />
       </div>
     </main>
+
     <footer>Inhalt des Footers</footer>
   </body>
 </html>

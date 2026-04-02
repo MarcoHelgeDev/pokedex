@@ -1,5 +1,6 @@
 @import "./components.css";
 @import "./pkmn-types.css";
+@import "./dialog.css";
 @import "./fonts.css";
 @import "./defaults/standard.css";
 @import "./defaults/sticky-footer.css";
@@ -26,13 +27,6 @@
   gap: 2rem;
 }
 
-.pkmn-detail-card-wrapper {
-  flex-shrink: 0;
-  width: 32rem;
-  height: 80vh;
-  padding: 2rem;
-}
-
 .pkmn-card {
   display: flex;
   align-items: center;
@@ -43,7 +37,6 @@
   box-shadow: var(--box-shadow) 0 1rem 2.5rem;
   padding: 2rem;
   margin-top: 5rem;
-
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease;
@@ -89,6 +82,7 @@
 .pkmn-card-info > h2 {
   font-size: 2.5rem;
   line-height: 1rem;
+  text-transform: capitalize;
 }
 
 .pkmn-card-info > p {
